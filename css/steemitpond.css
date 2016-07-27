@@ -31,6 +31,10 @@ header h1 {
     font-size: 1.5em;
 }
 
+header a {
+    text-decoration: none;
+}
+
 #open-about-steemit-pond {
     position: fixed;
     top: 0;
