@@ -1,16 +1,8 @@
-/*
-TODO
-- Info and about
-- Add to github
-- Update your server
-- Add to server
-- Analytics
--
-- Media queries to resize fish based on screen
-- Don't forget to credit your images
----------------------------------------
-*/
-
+/**
+ * Auth: Brian W. Howell
+ * Desc: Visualization of Steemit activity on the steem blockchain
+ * 
+ */
 var SteemitPond = (function() {
 
     // Websocket
@@ -23,18 +15,6 @@ var SteemitPond = (function() {
 
     // Just some useful constants
     var DOMAIN = "http://steemit.com/";
-
-    // Doesn't ensure that image assets are preloaded, but gives them a fighting chance.
-    var preloadImageAssets = function() {
-        $('<img src="img/whale.png" />');
-        $('<img src="img/minnow-1.png" />');
-        $('<img src="img/minnow-2.png" />');
-        $('<img src="img/minnow-3.png" />');
-        $('<img src="img/minnow-4.png" />');
-        $('<img src="img/minnow-5.png" />');
-        $('<img src="img/bubble.png" />');
-        pollLatestBlock();
-    }
 
     var pollLatestBlock = function() {
         ws.connect().then(function(response) { 
@@ -262,7 +242,7 @@ var SteemitPond = (function() {
     }; // initGarbageElement
 
     return { 
-        init : preloadImageAssets // gets the ball rolling
+        init : pollLatestBlock // gets the ball rolling
     };
 
 })(); // SteemitPond
