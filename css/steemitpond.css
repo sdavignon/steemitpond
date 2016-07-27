@@ -1,0 +1,150 @@
+@import url(https://fonts.googleapis.com/css?family=Lato:400,700italic,400italic);
+
+html {
+	height: 100%;
+	overflow: hidden;
+	font-family: 'Lato', sans-serif;
+	background: #008fe8; /* Old browsers */
+	background: -moz-linear-gradient(top,  #008fe8 21%, #005ebc 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  #008fe8 21%,#005ebc 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  #008fe8 21%,#005ebc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 ); /* IE6-9 */
+}
+
+/*--------------------------*
+ * Header styling           *
+ *--------------------------*/
+
+header {
+	padding: 5px;
+}
+
+header #logo {
+	display:inline-block;
+    vertical-align:middle;
+}
+
+header h1 {
+	display:inline-block;
+    vertical-align:middle;
+    color: white;
+    font-size: 1.5em;
+}
+
+/*--------------------------*
+ * Fish Styling - New Post  *
+ *--------------------------*/
+
+.new-post-fish {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+    height: 7em;
+    white-space: nowrap;
+}
+
+.new-post-fish a {
+    color: white;
+    text-decoration: none;
+}
+
+.new-post-fish a.auth-url {
+    color: #88cffc;
+}
+
+.new-post-fish a:hover {
+    text-decoration: underline;
+}
+
+.new-post-fish-data {
+    display:inline-block;
+    vertical-align:middle;
+    text-align: right;
+}
+
+.new-post-fish-title {
+    white-space: nowrap;
+}
+
+.new-post-fish-image {
+    display:inline-block;
+    vertical-align:middle;
+    height: 100%;
+    width: auto;
+}
+
+/*--------------------------------------*
+ * Fish Styling - Existing Post (reply) *
+ *--------------------------------------*/
+
+.existing-post-fish a {
+	display: block;
+    text-align: center;
+    height: 3em;
+    white-space: nowrap;
+    color: #88cffc;
+    font-size: .7em;
+    text-decoration: none;
+}
+
+.existing-post-fish a:hover {
+	color: white;
+    text-decoration: underline;
+}
+
+.existing-post-fish-image {
+    display:inline-block;
+    vertical-align:middle;
+    height: 100%;
+    width: auto;
+}
+
+/*--------------------------*
+ * Bubble Styling - Upvotes *
+ *--------------------------*/
+
+.upvote-bubble {
+	text-align: center;
+	font-size: .6em;
+	white-space: nowrap;
+}
+
+.upvote-bubble a {
+	text-decoration: none;
+	color: #88cffc;
+}
+
+.upvote-bubble a:hover {
+	text-decoration: underline;
+	color: white;
+}
+
+.upvote-bubble-image {
+	margin-bottom: 2px;
+}
+
+/*-----------------------------*
+ * Garbage Styling - Downvotes *
+ *-----------------------------*/
+
+.downvote-garbage {
+    text-align: center;
+    font-size: .6em;
+    white-space: nowrap;
+}
+
+.downvote-garbage a {
+    text-decoration: none;
+    color: #88cffc;
+}
+
+.downvote-garbage a:hover {
+    text-decoration: underline;
+    color: white;
+}
+
+.downvote-garbage-image {
+    margin-top: 2px;
+    max-width: 45px;
+}
+
