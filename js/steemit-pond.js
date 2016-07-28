@@ -249,17 +249,6 @@ var SteemitPond = (function() {
 
 $( document ).ready(function() {
     if (window.WebSocket) {
-
-        var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        if (iOS) {
-
-            $('html').on('touchmove', false);
-            $('body').on('touchmove', false);
-            $('#about-steemit-pond').on('touchmove', true);
-  
-          
-        }
-
         SteemitPond.init();
     } else {
         alert('Websocket is not supported by your browser.');
