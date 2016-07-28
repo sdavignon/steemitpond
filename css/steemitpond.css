@@ -10,12 +10,12 @@ html {
 	background: -webkit-linear-gradient(top,  #008fe8 21%,#005ebc 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom,  #008fe8 21%,#005ebc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 ); /* IE6-9 */
-    -webkit-overflow-scrolling: touch; /* webkit scroll issue */
 }
 
 body {
     max-width: 100%;
     max-height: 100%;
+    -webkit-overflow-scrolling: auto; /* webkit scrolling issue */
     overflow: hidden;
 }
 
