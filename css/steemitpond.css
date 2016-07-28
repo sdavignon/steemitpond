@@ -35,6 +35,22 @@ header a {
     text-decoration: none;
 }
 
+#created-by {
+    padding-top: 7px;
+    padding-left: 3px;
+    display:inline-block;
+    vertical-align:middle;
+    color: white;
+}
+
+#created-by a {
+    color: #88cffc;
+}
+
+#created-by a:hover {
+    text-decoration: underline;
+}
+
 #open-about-steemit-pond {
     position: fixed;
     top: 0;
