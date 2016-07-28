@@ -252,7 +252,7 @@ $( document ).ready(function() {
 
         var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         if (iOS) {
-            $("body").on("touchmove", false);
+            $("#steemit-pond").on("touchmove", false);
         }
 
         SteemitPond.init();
