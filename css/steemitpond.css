@@ -11,10 +11,6 @@ html {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 ); /* IE6-9 */
 }
 
-#steemit-pond {
-    overflow: hidden;
-}
-
 /*--------------------------*
  * Header styling           *
  *--------------------------*/
