@@ -249,6 +249,14 @@ var SteemitPond = (function() {
 
 $( document ).ready(function() {
     if (window.WebSocket) {
+
+        var iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (iOS) {
+            document.ontouchstart = function(e){ 
+                e.preventDefault(); 
+            }
+        }
+
         SteemitPond.init();
     } else {
         alert('Websocket is not supported by your browser.');
