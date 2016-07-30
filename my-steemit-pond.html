@@ -1,1 +1,83 @@
-my-steemit-pond.html
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Steemit Pond</title>
+    <meta name="description" content="Visualize your Steemit activity from with the Steemit Pond">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/steemit-pond.css">
+    <link rel="stylesheet" type="text/css" href="css/my-steemit-pond.css">
+</head>
+<body>
+
+<header>
+    <a target="_blank "href="https://steemit.com/steem/@spectral/steem-coin-symbol">
+    	<img id="logo" src="img/steemit-logo.png" alt="Steemit Logo courtesy of @spectral" />
+    </a>
+    <h1>My Steemit Pond ></h1>
+    <div id="created-by">Created by <a target="_blank" href="http://steemit.com/@mynameisbrian">@mynameisbrian</a></div>
+	<div id="open-about-steemit-pond" onclick="openNav()">About Steemit Pond</div>
+</header>
+
+<div id="about-steemit-pond" class="sidenav">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<h2 id="legend-title">Legend</h2>
+	<h3>New Top Level Post</h3>
+	<div class="legend-image-container">
+		<img class="legend-image-full" src="img/whale.png" alt="New post" />
+	</div>
+	<h3>Comment Made on Existing Post</h3>
+	<div class="legend-image-container">
+		<img class="legend-image-third" src="img/minnow-3.png" alt="Comment on existing post" />
+		<img class="legend-image-third" src="img/minnow-4.png" alt="Comment on existing post" />
+		<img class="legend-image-third" src="img/minnow-5.png" alt="Comment on existing post" />
+		<img class="legend-image-third" src="img/minnow-1.png" alt="Comment on existing post" />
+		<img class="legend-image-third" src="img/minnow-2.png" alt="Comment on existing post" />
+	</div>
+	<h3>Upvote</h3>
+	<div class="legend-image-container">
+		<img src="img/bubble.png" alt="Upvote" />
+	</div>
+	<h3>Downvote</h3>
+	<div class="legend-image-container">
+		<img class="legend-image-third" src="img/garbage-1.png" alt="Downvote" />
+		<img class="legend-image-third" src="img/garbage-2.png" alt="Downvote" />
+	</div>
+	<br /><hr />
+	<a target="_blank" href="http://bri.how">Brian W. Howell</a>
+	<a target="_blank" href="http://steemit.com/@mynameisbrian">@mynameisbrian</a>
+	<a target="_blank" href="https://github.com/bigbhowell/steemitpond">Source Code</a>
+	<br /><br />
+</div>
+
+<!-- Steemit Pond container -->
+<div id="steemit-pond"></div>
+
+<script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
+<script src="js/steemjs/js/steem.min.js"></script>
+<script src="js/steemit-pond.js"></script>
+
+<!-- About menu -->
+<script>
+	function openNav() { $('#about-steemit-pond').addClass('sidenav-box-shadow').width(300); }
+	function closeNav() { $('#about-steemit-pond').remove('sidenav-box-shadow').width(0); }
+</script>
+
+<!-- Google Analytics -->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-81495200-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
+
