@@ -222,6 +222,33 @@ a.closebtn {
     width: auto;
 }
 
+/*-------------------------------*
+ * Dolphin Styling - New Account *
+ *-------------------------------*/
+
+.new-account-dolphin a {
+    display: block;
+    text-align: center;
+    height: 3.8em;
+    white-space: nowrap;
+    color: #88cffc;
+    font-size: .7em;
+    text-decoration: none;
+}
+
+.new-account-dolphin a:hover {
+    color: white;
+    text-decoration: underline;
+}
+
+.new-account-dolphin-image {
+    display:inline-block;
+    vertical-align:middle;
+    height: 100%;
+    width: auto;
+    margin-top: 2px;
+}
+
 /*--------------------------*
  * Bubble Styling - Upvotes *
  *--------------------------*/

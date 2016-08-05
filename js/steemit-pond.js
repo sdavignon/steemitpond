@@ -106,12 +106,18 @@ var SteemitPond = (function() {
         var author = $('<div class="existing-post-fish-author">' + comment.author + '</div>');
         var image = $('<img class="existing-post-fish-image" src="' + getMinnowImage() + '" />');
         var link = $('<a target="_blank" href="' + commentUrl + '"></a>');
-        link.append(author);
         link.append(image);
+        link.append(author);
         var fish = $('<div class="existing-post-fish"></div>');
         fish.append(link);
 
         swimLeftToRight(fish, 400, 22000, 38000);
+    };
+
+    // Returns path to random minnow image
+    var getMinnowImage = function() {
+        var imageNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+        return 'img/minnow-' + imageNum + '.png';
     };
 
     /*-------------------*
@@ -157,13 +163,7 @@ var SteemitPond = (function() {
         sinkToBottom(garbage, 125, 12000, 25000);
     };
 
-    // Returns path to random minnow image
-    var getMinnowImage = function() {
-        var imageNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-        return 'img/minnow-' + imageNum + '.png';
-    };
-
-    // Returns path to random minnow image
+    // Returns path to random garbage image
     var getGarbageImage = function() {
         var imageNum = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
         return 'img/garbage-' + imageNum + '.png';
@@ -174,8 +174,17 @@ var SteemitPond = (function() {
      *----------------------*/
 
     var processAccountCreate = function(account) {
-        console.log("ACCOUNT CREATED");
-        console.log(account);
+        var newAcctUrl = DOMAIN + '@' + account.new_account_name;
+
+        var accountName = $('<div class="new-account-name">' + account.new_account_name + '</div>');
+        var image = $('<img class="new-account-dolphin-image" src="img/dolphin-1.png" />');
+        var link = $('<a target="_blank" href="' + newAcctUrl + '"></a>');
+        link.append(accountName);
+        link.append(image);
+        var dolphin = $('<div class="new-account-dolphin"></div>');
+        dolphin.append(link);
+
+        swimLeftToRight(dolphin, 400, 20000, 32000);
     };
 
     /*--------------*
