@@ -6,7 +6,7 @@
 var SteemitPond = (function() {
 
     // Websocket
-    var server = 'wss://this.piston.rocks'; 
+    var server = 'wss://this.piston.rocks';
     var ws = new WebSocketWrapper(server);
     var steem = new SteemWrapper(ws);
 
@@ -17,12 +17,12 @@ var SteemitPond = (function() {
     var DOMAIN = "http://steemit.com/";
 
     var pollLatestBlock = function() {
-        ws.connect().then(function(response) { 
+        ws.connect().then(function(response) {
             steem.send('get_dynamic_global_properties',[], function(response) {
                 if (lastIrreversibleBlock != response["last_irreversible_block_num"]) {
                     lastIrreversibleBlock = response["last_irreversible_block_num"];
                     parseTransactionsIn(lastIrreversibleBlock);
-                } 
+                }
                 setTimeout(pollLatestBlock(), 1000);
             });
         });
@@ -46,13 +46,26 @@ var SteemitPond = (function() {
             case 'vote':
                 filterVoteType(data);
                 break;
+            case 'account_create':
+                processAccountCreate(data);
+                break;
+            case 'account_update':
+            case 'transfer':
+            case 'limit_order_create':
+            case 'limit_order_cancel':
+            case 'pow':
+                break;
             default:
                 break;
         }
     };
 
+    /*----------------------*
+     *  Comment processing  *
+     *----------------------*/
+
     var filterCommentType = function(comment) {
-        if (comment.title != "") {
+        if (comment.title !== "") {
             processNewPost(comment);
         } else {
             processExistingPost(comment);
@@ -63,7 +76,7 @@ var SteemitPond = (function() {
         var postUrl = DOMAIN + comment.parent_permlink + '/@' + comment.author + '/' + comment.permlink;
         var authUrl = DOMAIN + '@' + comment.author;
 
-        var title = $('<div class="new-post-fish-title"></div>')
+        var title = $('<div class="new-post-fish-title"></div>');
         var titleLink = $('<a target="_blank" href="' + postUrl + '">' + comment.title + '</a>');
         title.append(titleLink);
         var author = $('<div class="new-post-fish-author"></div>');
@@ -79,12 +92,16 @@ var SteemitPond = (function() {
         fish.append(data);
         fish.append(imageLink);
 
-        initFishElement(fish);
+        // TODO Resize
+        //fish.css('height', '50px');
+        swimLeftToRight(fish, 350, 18000, 32000);
     };
 
     var processExistingPost = function(comment) {
-        var commentUrl = DOMAIN + 'steempond/@' + comment.parent_author + '/'
-                + comment.parent_permlink + '#@' + comment.author + '/' + comment.permlink;
+        var parentUrl = 'steempond/@' + comment.parent_author;
+        var parentPermlinkUrl = '/' + comment.parent_permlink;
+        var authorUrl = '#@' + comment.author + '/';
+        var commentUrl = DOMAIN + parentUrl + parentPermlinkUrl + authorUrl + comment.permlink;
 
         var author = $('<div class="existing-post-fish-author">' + comment.author + '</div>');
         var image = $('<img class="existing-post-fish-image" src="' + getMinnowImage() + '" />');
@@ -94,8 +111,12 @@ var SteemitPond = (function() {
         var fish = $('<div class="existing-post-fish"></div>');
         fish.append(link);
 
-        initFishElement(fish);
+        swimLeftToRight(fish, 400, 22000, 38000);
     };
+
+    /*-------------------*
+     *  Vote processing  *
+     *-------------------*/
 
     var filterVoteType = function(vote) {
         if(vote.weight < 0) {
@@ -119,14 +140,8 @@ var SteemitPond = (function() {
         var bubble = $('<div class="upvote-bubble"></div>');
         bubble.append(link);
 
-        initBubbleElement(bubble);
+        floatFromBottomToTop(bubble, 125, 15000, 28000);
     };
-
-    // Returns path to random minnow image
-    var getMinnowImage = function() {
-        var imageNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
-        return 'img/minnow-' + imageNum + '.png';
-    }
 
     var processDownvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
@@ -139,108 +154,118 @@ var SteemitPond = (function() {
         var garbage = $('<div class="downvote-garbage"></div>');
         garbage.append(link);
 
-        initGarbageElement(garbage);
+        sinkToBottom(garbage, 125, 12000, 25000);
+    };
+
+    // Returns path to random minnow image
+    var getMinnowImage = function() {
+        var imageNum = Math.floor(Math.random() * (5 - 1 + 1)) + 1;
+        return 'img/minnow-' + imageNum + '.png';
     };
 
     // Returns path to random minnow image
     var getGarbageImage = function() {
         var imageNum = Math.floor(Math.random() * (2 - 1 + 1)) + 1;
         return 'img/garbage-' + imageNum + '.png';
-    }
+    };
 
-    var initFishElement = function(fish) {
-        var FADE_SPEED      
-        var HEADER_HEIGHT = 60;
-        var UP_DOWN_MAX = 400; // distance fish can up or down from initial starting point
-        var MIN_FISH_SPEED = 28000;
-        var MAX_FISH_SPEED = 40000;
+    /*----------------------*
+     *  Account processing  *
+     *----------------------*/
 
-        // Setup starting location for fish
-        var minStartAt = HEADER_HEIGHT + UP_DOWN_MAX;
-        var maxStartAt = $(window).height() - UP_DOWN_MAX - fish.height();
-        var startAt = Math.floor(Math.random() * (maxStartAt - minStartAt + 1)) + minStartAt;
-        pond.append(fish);
-        fish.css({
+    var processAccountCreate = function(account) {
+        console.log("ACCOUNT CREATED");
+        console.log(account);
+    };
+
+    /*--------------*
+     *  Animations  *
+     *--------------*/
+
+    var swimLeftToRight = function(element, maxVertTraverseDist, minHorzTraverseTime, maxHorzTraverseTime) {
+
+        // Setup starting location for element
+        var minVertStartPos = $('header').height() + maxVertTraverseDist;
+        var maxVertStartPos = $(window).height() - maxVertTraverseDist - element.height();
+        var randomStartPos = Math.floor(Math.random() * (maxVertStartPos - minVertStartPos + 1)) + minVertStartPos;
+        pond.append(element);
+        element.css({
             position : 'absolute',
-            top : startAt,
-            left: 0 - fish.width()
+            top : randomStartPos,
+            left: 0 - element.width()
         });
 
         // Swim across the screen
-        var speed = Math.floor(Math.random() * (MAX_FISH_SPEED - MIN_FISH_SPEED + 1)) + MIN_FISH_SPEED;
-        var minFinishAt = fish.offset().top - UP_DOWN_MAX;
-        var maxFinishAt = fish.offset().top + UP_DOWN_MAX;
-        var finishAt = Math.floor(Math.random() * (maxFinishAt - minFinishAt + 1)) + minFinishAt;
-        fish.animate({
+        var speed = Math.floor(Math.random() * (maxHorzTraverseTime - minHorzTraverseTime + 1)) + minHorzTraverseTime;
+        var minVertFinishPos = element.offset().top - maxVertTraverseDist;
+        var maxVertFinishPos = element.offset().top + maxVertTraverseDist;
+        var randomFinishPos = Math.floor(Math.random() * (maxVertFinishPos - minVertFinishPos + 1)) + minVertFinishPos;
+        element.animate({
             left : '105%',
-            top : finishAt
+            top : randomFinishPos
         }, speed, function() {
-            fish.remove();
+            element.remove();
         });
-
-    }; // initFishElement
-
-    var initBubbleElement = function(bubble) {
-        var LEFT_RIGHT_MAX = 100; // distance bubbles can traverse left or right
-        var MIN_BUBBLE_SPEED = 15000;
-        var MAX_BUBBLE_SPEED = 20000;
-
-        // Setup starting location for bubble
-        var minStartAt = LEFT_RIGHT_MAX;
-        var maxStartAt = $(window).width() - LEFT_RIGHT_MAX - bubble.width();
-        var startAt = Math.floor(Math.random() * (maxStartAt - minStartAt + 1)) + minStartAt;
-        pond.append(bubble);
-
-        bubble.css({
+    };
+ 
+    var floatFromBottomToTop = function(element, maxHorzTraverseDist, minVertTraverseTime, maxVertTraverseTime) {
+        
+        // Setup starting location for element
+        var minHorzStartPos = maxHorzTraverseDist;
+        var maxHorzStartPos = $(window).width() - maxHorzTraverseDist - element.width();
+        var randomStartPos = Math.floor(Math.random() * (maxHorzStartPos - minHorzStartPos + 1)) + minHorzStartPos;
+        pond.append(element);
+        element.css({
             position : 'absolute',
-            top : $(window).height() + bubble.height(),
-            left : startAt
+            top : $(window).height() + element.height(),
+            left : randomStartPos
         });
 
         // Float up to the top of screen
-        var speed = Math.floor(Math.random() * (MAX_BUBBLE_SPEED - MIN_BUBBLE_SPEED + 1)) + MIN_BUBBLE_SPEED;
-        var minFinishAt = bubble.offset().left - LEFT_RIGHT_MAX;
-        var maxFinishAt = bubble.offset().left + LEFT_RIGHT_MAX;
-        var finishAt = Math.floor(Math.random() * (maxFinishAt - minFinishAt + 1)) + minFinishAt;
-        bubble.animate({
-            left : finishAt,
-            top : 0 - bubble.height()
+        var speed = Math.floor(Math.random() * (maxVertTraverseTime - minVertTraverseTime + 1)) + minVertTraverseTime;
+        var minHorzFinishPos = element.offset().left - maxHorzTraverseDist;
+        var maxHorzFinishPos = element.offset().left + maxHorzTraverseDist;
+        var randomFinishPos = Math.floor(Math.random() * (maxHorzFinishPos - minHorzFinishPos + 1)) + minHorzFinishPos;
+        element.animate({
+            left : randomFinishPos,
+            top : 0 - element.height()
         }, speed, 'linear', function() {
-            bubble.remove();
+            element.remove();
         });
+    };
 
-    }; // initBubbleElement
-
-    var initGarbageElement = function(garbage) {
+    var sinkToBottom = function(element, maxHorzTraverseDist, minVertTraverseTime, maxVertTraverseTime) {
         var LEFT_RIGHT_MAX = 100; // distance garbage can traverse left or right
         var MIN_GARBAGE_SPEED = 10000;
         var MAX_GARBAGE_SPEED = 20000;
 
         // Setup starting location for bubble
-        var minStartAt = LEFT_RIGHT_MAX;
-        var maxStartAt = $(window).width() - LEFT_RIGHT_MAX - garbage.width();
-        var startAt = Math.floor(Math.random() * (maxStartAt - minStartAt + 1)) + minStartAt;
-        pond.append(garbage);
-        garbage.css({
+        var minHorzStartPos = maxHorzTraverseDist;
+        var maxHorzStartPos = $(window).width() - maxHorzTraverseDist - element.width();
+        var randomStartPos = Math.floor(Math.random() * (maxHorzStartPos - minHorzStartPos + 1)) + minHorzStartPos;
+        pond.append(element);
+        element.css({
             position : 'absolute',
-            top : 0 - garbage.height(),
-            left : startAt
+            top : 0 - element.height(),
+            left : randomStartPos
         });
 
         // Sink down to bottom of the screen
-        var speed = Math.floor(Math.random() * (MAX_GARBAGE_SPEED - MIN_GARBAGE_SPEED + 1)) + MIN_GARBAGE_SPEED;
-        var minFinishAt = garbage.offset().left - LEFT_RIGHT_MAX;
-        var maxFinishAt = garbage.offset().left + LEFT_RIGHT_MAX;
-        var finishAt = Math.floor(Math.random() * (maxFinishAt - minFinishAt + 1)) + minFinishAt;
-        garbage.animate({
-            left : finishAt,
-            top : $(window).height() + garbage.height()
+        var speed = Math.floor(Math.random() * (maxVertTraverseTime - minVertTraverseTime + 1)) + minVertTraverseTime;
+        var minHorzFinishPos = element.offset().left - maxHorzTraverseDist;
+        var maxHorzFinishPos = element.offset().left + maxHorzTraverseDist;
+        var randomFinishPos = Math.floor(Math.random() * (maxHorzFinishPos - minHorzFinishPos + 1)) + minHorzFinishPos;
+        element.animate({
+            left : randomFinishPos,
+            top : $(window).height() + element.height()
         }, speed, function() {
-            garbage.remove();
+            element.remove();
         });
+    };
 
-    }; // initGarbageElement
-
+    /**
+     * Return SteemitPond API
+     */
     return { 
         init : pollLatestBlock // gets the ball rolling
     };
