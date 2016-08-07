@@ -49,12 +49,17 @@ var SteemitPond = (function() {
             case 'account_create':
                 processAccountCreate(data);
                 break;
-            case 'account_update':
             case 'transfer':
+                processTransfer(data);
+                break;
             case 'limit_order_create':
             case 'limit_order_cancel':
-            case 'pow':
+                processLimitOrder(data);
                 break;
+            case 'pow':
+                processPow(data);
+                break;
+            case 'account_update':
             default:
                 break;
         }
@@ -185,6 +190,36 @@ var SteemitPond = (function() {
         dolphin.append(link);
 
         swimLeftToRight(dolphin, 400, 20000, 32000);
+    };
+
+    /*--------------------------------*
+     *  Money related txs processing  *
+     *--------------------------------*/
+
+     var processTransfer = function(transfer) {
+        console.log("TRANSFER");
+     };
+
+     var processLimitOrder = function(order) {
+        console.log("LIMIT ORDER");
+     };
+
+    /*---------------------*
+     *  Mining processing  *
+     *---------------------*/
+
+    var processPow = function(pow) {
+        var acctUrl = DOMAIN + '@' + pow.worker_account;
+
+        var accountName = $('<div class="pow-account-name">' + pow.worker_account + '</div>');
+        var image = $('<img class="pow-shark-image" src="img/shark-1.png" />');
+        var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
+        link.append(image);
+        link.append(accountName);
+        var shark = $('<div class="pow-shark"></div>');
+        shark.append(link);
+
+        swimLeftToRight(shark, 400, 25000, 40000);
     };
 
     /*--------------*
