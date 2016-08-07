@@ -49,17 +49,21 @@ var SteemitPond = (function() {
             case 'account_create':
                 processAccountCreate(data);
                 break;
+            //case 'account_update':
+            //   break;
             case 'transfer':
                 processTransfer(data);
                 break;
             case 'limit_order_create':
-            case 'limit_order_cancel':
+                //
                 processLimitOrder(data);
+                break;
+            case 'limit_order_cancel':
+                //
                 break;
             case 'pow':
                 processPow(data);
                 break;
-            case 'account_update':
             default:
                 break;
         }
@@ -81,19 +85,19 @@ var SteemitPond = (function() {
         var postUrl = DOMAIN + comment.parent_permlink + '/@' + comment.author + '/' + comment.permlink;
         var authUrl = DOMAIN + '@' + comment.author;
 
-        var title = $('<div class="new-post-fish-title"></div>');
+        var title = $('<div class="new-post-title"></div>');
         var titleLink = $('<a target="_blank" href="' + postUrl + '">' + comment.title + '</a>');
         title.append(titleLink);
-        var author = $('<div class="new-post-fish-author"></div>');
+        var author = $('<div class="new-post-author"></div>');
         var authorLink = $('<a class="auth-url" target="_blank" href="' + authUrl + '">' + comment.author + '</a>');
         author.append(authorLink);
-        var data = $('<div class="new-post-fish-data"></div>');
+        var data = $('<div class="new-post-data"></div>');
         data.append(title);
         data.append(author);
         var imageLink = $('<a target="_blank" href="' + postUrl + '"></a>');
-        var image = $('<img class="new-post-fish-image" src="img/whale.png" />');
+        var image = $('<img class="new-post-image" src="img/whale.png" />');
         imageLink.append(image);
-        var fish = $('<div class="new-post-fish"></div>');
+        var fish = $('<div class="new-post"></div>');
         fish.append(data);
         fish.append(imageLink);
 
@@ -108,12 +112,12 @@ var SteemitPond = (function() {
         var authorUrl = '#@' + comment.author + '/';
         var commentUrl = DOMAIN + parentUrl + parentPermlinkUrl + authorUrl + comment.permlink;
 
-        var author = $('<div class="existing-post-fish-author">' + comment.author + '</div>');
-        var image = $('<img class="existing-post-fish-image" src="' + getMinnowImage() + '" />');
+        var author = $('<div class="existing-post-author">' + comment.author + '</div>');
+        var image = $('<img class="existing-post-image" src="' + getMinnowImage() + '" />');
         var link = $('<a target="_blank" href="' + commentUrl + '"></a>');
         link.append(image);
         link.append(author);
-        var fish = $('<div class="existing-post-fish"></div>');
+        var fish = $('<div class="existing-post"></div>');
         fish.append(link);
 
         swimLeftToRight(fish, 400, 22000, 38000);
@@ -140,15 +144,15 @@ var SteemitPond = (function() {
     var processUpvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
 
-        var image = $('<img class="upvote-bubble-image" src="img/bubble.png" />');
+        var image = $('<img class="upvote-image" src="img/bubble.png" />');
         // randomize bubble image size to make things a bit prettier
         var bubbleWidth = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
         image.css('width', bubbleWidth);
-        var voter = $('<div class="upvote-bubble-voter">' + vote.voter + '</div>');
+        var voter = $('<div class="upvote-voter">' + vote.voter + '</div>');
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
         link.append(image);
         link.append(voter);
-        var bubble = $('<div class="upvote-bubble"></div>');
+        var bubble = $('<div class="upvote"></div>');
         bubble.append(link);
 
         floatFromBottomToTop(bubble, 125, 15000, 28000);
@@ -157,12 +161,12 @@ var SteemitPond = (function() {
     var processDownvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
         
-        var voter = $('<div class="downvote-garbage-voter">' + vote.voter + '</div>');
-        var image = $('<img class="downvote-garbage-image" src="' + getGarbageImage() + '" />');
+        var voter = $('<div class="downvote-voter">' + vote.voter + '</div>');
+        var image = $('<img class="downvote-image" src="' + getGarbageImage() + '" />');
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
         link.append(voter);
         link.append(image);
-        var garbage = $('<div class="downvote-garbage"></div>');
+        var garbage = $('<div class="downvote"></div>');
         garbage.append(link);
 
         sinkToBottom(garbage, 125, 12000, 25000);
@@ -182,11 +186,11 @@ var SteemitPond = (function() {
         var newAcctUrl = DOMAIN + '@' + account.new_account_name;
 
         var accountName = $('<div class="new-account-name">' + account.new_account_name + '</div>');
-        var image = $('<img class="new-account-dolphin-image" src="img/dolphin-1.png" />');
+        var image = $('<img class="new-account-image" src="img/dolphin-1.png" />');
         var link = $('<a target="_blank" href="' + newAcctUrl + '"></a>');
         link.append(accountName);
         link.append(image);
-        var dolphin = $('<div class="new-account-dolphin"></div>');
+        var dolphin = $('<div class="new-account"></div>');
         dolphin.append(link);
 
         swimLeftToRight(dolphin, 400, 20000, 32000);
@@ -196,13 +200,16 @@ var SteemitPond = (function() {
      *  Money related txs processing  *
      *--------------------------------*/
 
-     var processTransfer = function(transfer) {
+    var processTransfer = function(transfer) {
         console.log("TRANSFER");
-     };
+        console.log(transfer);
+        var fromUrl = DOMAIN + '@' + pow.worker_account;
+        var toUrl = DOMAIN + '@' + pow.worker_account;
+    };
 
-     var processLimitOrder = function(order) {
-        console.log("LIMIT ORDER");
-     };
+    var processLimitOrderCreate = function(order) {
+        console.log("LIMIT ORDER CREATE");
+    };
 
     /*---------------------*
      *  Mining processing  *
@@ -212,11 +219,11 @@ var SteemitPond = (function() {
         var acctUrl = DOMAIN + '@' + pow.worker_account;
 
         var accountName = $('<div class="pow-account-name">' + pow.worker_account + '</div>');
-        var image = $('<img class="pow-shark-image" src="img/shark-1.png" />');
+        var image = $('<img class="pow-image" src="img/shark-1.png" />');
         var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
         link.append(image);
         link.append(accountName);
-        var shark = $('<div class="pow-shark"></div>');
+        var shark = $('<div class="pow"></div>');
         shark.append(link);
 
         swimLeftToRight(shark, 400, 25000, 40000);
@@ -306,6 +313,21 @@ var SteemitPond = (function() {
             element.remove();
         });
     };
+
+    // TESTING --------------------
+
+    var testingData = {
+        worker_account : 'mynameisbrianbot'
+    };
+
+    var testing = function() {
+        processPow(testingData);
+        setTimeout(testing, 5000);
+    };
+
+    testing();
+
+    // END TESTING ----------------
 
     /**
      * Return SteemitPond API

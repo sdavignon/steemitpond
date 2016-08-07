@@ -4,17 +4,15 @@ html {
 	height: 100%;
     overflow: hidden;
 	font-family: 'Lato', sans-serif;
-	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00b7ea+0,004084+100 */
-    background: #00b7ea; /* Old browsers */
-    background: -moz-linear-gradient(top,  #00b7ea 0%, #004084 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  #00b7ea 0%,#004084 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  #00b7ea 0%,#004084 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#004084',GradientType=0 ); /* IE6-9 */
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#008fe8+0,004275+100 */
+    background: #008fe8; /* Old browsers */
+    background: -moz-linear-gradient(top,  #008fe8 21%, #005ebc 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  #008fe8 21%,#005ebc 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  #008fe8 21%,#005ebc 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 ); /* IE6-9 */
 }
 
-a {
-    outline: 0;
-}
+a { outline: 0; }
 
 /*--------------------------*
  * Header styling           *
@@ -159,11 +157,11 @@ a.closebtn {
  * Pond Element Styles  *
  *----------------------*/
 
-.existing-post-fish a,
-.new-account-dolphin a,
-.pow-shark a,
-.upvote-bubble a,
-.downvote-garbage a {
+.existing-post a,
+.new-account a,
+.pow a,
+.upvote a,
+.downvote a {
     display: block;
     text-align: center;
     white-space: nowrap;
@@ -171,22 +169,22 @@ a.closebtn {
     text-decoration: none;
 }
 
-.new-post-fish a:hover,
-.existing-post-fish a:hover,
-.new-account-dolphin a:hover,
-.pow-shark a:hover,
-.upvote-bubble a:hover,
-.downvote-garbage a:hover {
+.new-post a:hover,
+.existing-post a:hover,
+.new-account a:hover,
+.pow a:hover,
+.upvote a:hover,
+.downvote a:hover {
     color: white;
     text-decoration: underline;
 }
 
-.new-post-fish-image,
-.existing-post-fish-image,
-.new-account-dolphin-image,
-.pow-shark-image,
-.upvote-bubble-image,
-.downvote-garbage-image {
+.new-post-image,
+.existing-post-image,
+.new-account-image,
+.pow-image,
+.upvote-image,
+.downvote-image {
     display:inline-block;
     vertical-align:middle;
     height: 100%;
@@ -197,7 +195,7 @@ a.closebtn {
  * New Post Whales Styling  *
  *--------------------------*/
 
-.new-post-fish {
+.new-post {
     display: table-cell;
     vertical-align: middle;
     text-align: center;
@@ -205,61 +203,61 @@ a.closebtn {
     height: 7em;
 }
 
-.new-post-fish a {
+.new-post a {
     color: white;
     text-decoration: none;
 }
 
-.new-post-fish-data {
+.new-post-data {
     display:inline-block;
     vertical-align:middle;
     text-align: right;
 }
 
-.new-post-fish a.auth-url { color: #88cffc; }
-.new-post-fish-title { white-space: nowrap; }
+.new-post a.auth-url { color: #88cffc; }
+.new-post-title { white-space: nowrap; }
 
 /*----- Existing Post (reply) - Fish -----*/
 
-.existing-post-fish a {
+.existing-post a {
     height: 3em;
     font-size: .7em;
 }
 
-.existing-post-fish-image {}
+.existing-post-image {}
 
 /*----- New Account - Dolphin -----*/
 
-.new-account-dolphin a {
+.new-account a {
     height: 3.5em;
     font-size: .7em;
 }
 
-.new-account-dolphin-image {}
+.new-account-image {}
 
 /*----- POW - Shark -----*/
 
-.pow-shark a {
+.pow a {
     height: 6.2em;
     font-size: .7em;
 }
 
-.pow-shark-image {}
+.pow-image {}
 
 /*----- Upvotes - Bubbles -----*/
 
-.upvote-bubble a {
+.upvote a {
 	font-size: .6em;
 }
 
-.upvote-bubble-image { margin-bottom: 5px; }
+.upvote-image { margin-bottom: 5px; }
 
 /*----- Downvotes - Garbage -----*/
 
-.downvote-garbage a {
+.downvote a {
     height: 3em;
     font-size: .6em;
 }
 
-.downvote-garbage-image { margin-top:2px; }
+.downvote-image { margin-top:2px; }
 
