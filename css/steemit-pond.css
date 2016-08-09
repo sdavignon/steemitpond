@@ -12,19 +12,24 @@ html {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 ); /* IE6-9 */
 }
 
-a { outline: 0; }
+a {
+    outline: 0;
+    text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+.no-ul:hover { text-decoration: none; }
 
 /*--------------------------*
  * Header styling           *
  *--------------------------*/
 
-header {
-	padding: 5px;
-}
+header { padding: 5px; }
 
 header #logo {
 	display:inline-block;
     vertical-align:middle;
+    text-decoration: none !important;
 }
 
 header h1 {
@@ -32,10 +37,6 @@ header h1 {
     vertical-align:middle;
     color: white;
     font-size: 1.5em;
-}
-
-header a {
-    text-decoration: none;
 }
 
 #created-by {
@@ -48,10 +49,6 @@ header a {
 
 #created-by a {
     color: #88cffc;
-}
-
-#created-by a:hover {
-    text-decoration: underline;
 }
 
 #open-about-steemit-pond {
@@ -131,7 +128,6 @@ header a {
     margin-left: 15px;
     margin-top: 1em;
     margin-bottom: .5em;
-    text-decoration: none;
     font-size: 1em;
     color: #0179c4;
     display: block;
@@ -166,7 +162,6 @@ a.closebtn {
     text-align: center;
     white-space: nowrap;
     color: #88cffc;
-    text-decoration: none;
 }
 
 .new-post a:hover,
@@ -176,7 +171,6 @@ a.closebtn {
 .upvote a:hover,
 .downvote a:hover {
     color: white;
-    text-decoration: underline;
 }
 
 .new-post-image,
@@ -191,9 +185,7 @@ a.closebtn {
     width: auto;
 }
 
-/*--------------------------*
- * New Post Whales Styling  *
- *--------------------------*/
+/*----- New Post Whales Styling -----*/
 
 .new-post {
     display: table-cell;
@@ -203,19 +195,41 @@ a.closebtn {
     height: 7em;
 }
 
-.new-post a {
-    color: white;
-    text-decoration: none;
-}
-
 .new-post-data {
     display:inline-block;
     vertical-align:middle;
     text-align: right;
 }
 
+.new-post a { color: white; }
+.new-post a:hover { text-decoration: underline; }
 .new-post a.auth-url { color: #88cffc; }
 .new-post-title { white-space: nowrap; }
+
+/*----- Transfers -----*/
+
+.transfer {
+    white-space: nowrap;
+    font-size: .7em;
+    color: #88cffc;
+    text-align: right;
+}
+
+.transfer-from div,
+.transfer-from img,
+.transfer-to div,
+.transfer-to img {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.transfer-from { height: 3.5em; } /* Adjusts fish size */
+.transfer-to { height: 3.5em; } /* Adjusts fish size */
+.transfer-from { margin-bottom: -1.8em; } /* Adjust fish position */
+.transfer-to {margin-right: 2em; } /* Adjust fish position */
+.transfer-from img { height: 100%; }
+.transfer-to img { height: 100%; }
+.transfer a { color: white; }
 
 /*----- Existing Post (reply) - Fish -----*/
 

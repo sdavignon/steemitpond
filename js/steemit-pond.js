@@ -43,27 +43,25 @@ var SteemitPond = (function() {
             case 'comment':
                 filterCommentType(data);
                 break;
-            case 'vote':
-                filterVoteType(data);
-                break;
-            case 'account_create':
-                processAccountCreate(data);
-                break;
+            //case 'vote':
+                //filterVoteType(data);
+                //break;
+            //case 'account_create':
+                //processAccountCreate(data);
+                //break;
             //case 'account_update':
-            //   break;
-            case 'transfer':
-                processTransfer(data);
-                break;
-            case 'limit_order_create':
-                //
-                processLimitOrder(data);
-                break;
-            case 'limit_order_cancel':
-                //
-                break;
-            case 'pow':
-                processPow(data);
-                break;
+                //break;
+            //case 'pow':
+                //processPow(data);
+                //break;
+            //case 'limit_order_create':
+                //processLimitOrderCreate(data);
+                //break;
+            //case 'limit_order_cancel':
+                //break;
+            //case 'transfer':
+                //processTransfer(data);
+                //break;
             default:
                 break;
         }
@@ -95,13 +93,16 @@ var SteemitPond = (function() {
         data.append(title);
         data.append(author);
         var imageLink = $('<a target="_blank" href="' + postUrl + '"></a>');
+        //--------------------------------------------
+        // TODO Use an if statement to apply filters
+        //--------------------------------------------
         var image = $('<img class="new-post-image" src="img/whale.png" />');
         imageLink.append(image);
         var fish = $('<div class="new-post"></div>');
         fish.append(data);
         fish.append(imageLink);
 
-        // TODO Resize
+        // TODO Resize based on article length?
         //fish.css('height', '50px');
         swimLeftToRight(fish, 350, 18000, 32000);
     };
@@ -141,6 +142,9 @@ var SteemitPond = (function() {
         }
     };
 
+    /**
+     * TODO Easter egg my upvotes?
+     */
     var processUpvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
 
@@ -201,14 +205,34 @@ var SteemitPond = (function() {
      *--------------------------------*/
 
     var processTransfer = function(transfer) {
-        console.log("TRANSFER");
-        console.log(transfer);
-        var fromUrl = DOMAIN + '@' + pow.worker_account;
-        var toUrl = DOMAIN + '@' + pow.worker_account;
+        var fromUrl = DOMAIN + '@' + transfer.from;
+        var toUrl = DOMAIN + '@' + transfer.to;
+
+        var from = $('<div class="transfer-from"></div>');
+        var fromText = $('<div>' + transfer.amount + ' from <a target="_blank" href="' + fromUrl + '">' + transfer.from + '</a>');
+        var fromImg = $('<a target="_blank" href="' + fromUrl + '"><img src="img/barracuda.png" /></a>');
+        from.append(fromText);
+        from.append(fromImg);
+
+        var to = $('<div class="transfer-to"></div>');
+        var toText = $('<div>to <a target="_blank" href="' + toUrl + '">' + transfer.to + '</a>');
+        var toImg = $('<a target="_blank" href="' + toUrl + '"><img src="img/barracuda.png" /></a>');
+        to.append(toText);
+        to.append(toImg);
+
+        var barracudas = $('<div class="transfer"></div>');
+        barracudas.append(from);
+        barracudas.append(to);
+
+        swimLeftToRight(barracudas, 400, 30000, 40000);
     };
 
     var processLimitOrderCreate = function(order) {
+
+        // Need ss
+
         console.log("LIMIT ORDER CREATE");
+        console.log(order);
     };
 
     /*---------------------*
@@ -226,7 +250,7 @@ var SteemitPond = (function() {
         var shark = $('<div class="pow"></div>');
         shark.append(link);
 
-        swimLeftToRight(shark, 400, 25000, 40000);
+        swimLeftToRight(shark, 400, 28000, 40000);
     };
 
     /*--------------*
@@ -317,11 +341,13 @@ var SteemitPond = (function() {
     // TESTING --------------------
 
     var testingData = {
-        worker_account : 'mynameisbrianbot'
+        from : 'mynameisbrian',
+        to : 'someone',
+        amount : '0.404 STEEM'
     };
 
     var testing = function() {
-        processPow(testingData);
+        processTransfer(testingData);
         setTimeout(testing, 5000);
     };
 
