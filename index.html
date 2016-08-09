@@ -5,52 +5,94 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>Steemit Pond</title>
     <meta name="description" content="Steemit Pond a is real-time visualization of current Steemit activity - with an aquatic theme">
+    <meta name="author" content="Brian W. Howell">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" type="text/css" href="css/reset.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="css/steemit-pond.css">
 </head>
 <body>
 
 <header>
-    <a class="no-ul" target="_blank "href="https://steemit.com/steem/@spectral/steem-coin-symbol">
-    	<img id="logo" src="img/steemit-logo.png" alt="Steemit Logo courtesy of @spectral" />
-    </a>
-    <h1>Steemit Pond ></h1>
-    <div id="created-by">Created by <a target="_blank" href="http://steemit.com/@mynameisbrian">@mynameisbrian</a></div>
-	<div id="open-about-steemit-pond" onclick="openNav()">About Steemit Pond</div>
+    <img class="logo" src="img/logo.png" alt="White Steemit Logo" />
+    <h1>Steemit Pond</h1>
+    <ul>
+        <li id="sound"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></li>
+        <li id="user-filters"><span class="glyphicon glyphicon-eye-close"></span></li>
+        <li id="app-info"><span class="glyphicon glyphicon-info-sign"></span></li>
+    </ul>
 </header>
 
-<div id="about-steemit-pond" class="sidenav">
-	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<h2 id="legend-title">Legend</h2>
-	<h3>New Top Level Post</h3>
-	<div class="legend-image-container">
-		<img class="legend-image-full" src="img/whale.png" alt="New post" />
-	</div>
-	<h3>Comment Made on Existing Post</h3>
-	<div class="legend-image-container">
-		<img class="legend-image-third" src="img/minnow-3.png" alt="Comment on existing post" />
-		<img class="legend-image-third" src="img/minnow-4.png" alt="Comment on existing post" />
-		<img class="legend-image-third" src="img/minnow-5.png" alt="Comment on existing post" />
-		<img class="legend-image-third" src="img/minnow-1.png" alt="Comment on existing post" />
-		<img class="legend-image-third" src="img/minnow-2.png" alt="Comment on existing post" />
-	</div>
-	<h3>Upvote</h3>
-	<div class="legend-image-container">
-		<img src="img/bubble.png" alt="Upvote" />
-	</div>
-	<h3>Downvote</h3>
-	<div class="legend-image-container">
-		<img class="legend-image-third" src="img/garbage-1.png" alt="Downvote" />
-		<img class="legend-image-third" src="img/garbage-2.png" alt="Downvote" />
-	</div>
-	<br /><hr />
-	<a target="_blank" href="http://bri.how">Brian W. Howell</a>
-	<a target="_blank" href="http://steemit.com/@mynameisbrian">@mynameisbrian</a>
-	<a target="_blank" href="https://github.com/bigbhowell/steemitpond">Source Code</a>
-	<br /><br />
-</div>
+<div id="side-menu" class="sidenav">
+	<a href="javascript:void(0)" class="close-menu-btn">&times;</a>
+    <div class="menus-container">
+
+        <!-- User filters -->
+        <div class="user-filters-menu">
+            <div class="add-user">
+                <h2>Filter Users</h2>
+                <p>Enter a username and all user transactions<br /> will appear as scuba divers in the pond</p>
+                <div class="add-user-filter-input-container">
+                    <input class="add-user-filter-input" type="text" />
+                    <div class="add-user-filter-submit">
+                        <span class="glyphicon glyphicon-ok-circle"></span>
+                    </div>
+                </div>
+            </div>
+            <ul>
+                <li>
+                    @mynameisbrian
+                    <span class="glyphicon glyphicon-remove"></span>
+                </li>
+                <li>
+                    @mynameisbrian
+                    <span class="glyphicon glyphicon-remove"></span>
+                </li>
+                <li>
+                    @mynameisbrian
+                    <span class="glyphicon glyphicon-remove"></span>
+                </li>
+                <li>
+                    @mynameisbrian
+                    <span class="glyphicon glyphicon-remove"></span>
+                </li>
+            </ul>
+        </div> <!-- .user-filters-menu -->
+
+        <!-- Info -->
+        <div class="info-menu">
+        	<h2 id="legend-title">Legend</h2>
+        	<h3>New Top Level Post</h3>
+        	<div class="legend-image-container">
+        		<img class="legend-image-full" src="img/whale.png" alt="New post" />
+        	</div>
+        	<h3>Comment Made on Existing Post</h3>
+        	<div class="legend-image-container">
+        		<img class="legend-image-third" src="img/minnow-3.png" alt="Comment on existing post" />
+        		<img class="legend-image-third" src="img/minnow-4.png" alt="Comment on existing post" />
+        		<img class="legend-image-third" src="img/minnow-5.png" alt="Comment on existing post" />
+        		<img class="legend-image-third" src="img/minnow-1.png" alt="Comment on existing post" />
+        		<img class="legend-image-third" src="img/minnow-2.png" alt="Comment on existing post" />
+        	</div>
+        	<h3>Upvote</h3>
+        	<div class="legend-image-container">
+        		<img src="img/bubble.png" alt="Upvote" />
+        	</div>
+        	<h3>Downvote</h3>
+        	<div class="legend-image-container">
+        		<img class="legend-image-third" src="img/garbage-1.png" alt="Downvote" />
+        		<img class="legend-image-third" src="img/garbage-2.png" alt="Downvote" />
+        	</div>
+        	<br /><hr />
+        	<a target="_blank" href="http://bri.how">Brian W. Howell</a>
+        	<a target="_blank" href="http://steemit.com/@mynameisbrian">@mynameisbrian</a>
+        	<a target="_blank" href="https://github.com/bigbhowell/steemitpond">Source Code</a>
+        	<br /><br />
+        </div> <!-- .info-menu -->
+
+    </div> <!-- .menus-container -->
+</div> <!-- #side-menu -->
 
 <!-- Steemit Pond container -->
 <div id="steemit-pond"></div>
@@ -58,12 +100,6 @@
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
 <script src="js/steemjs/js/steem.min.js"></script>
 <script src="js/steemit-pond.js"></script>
-
-<!-- About menu -->
-<script>
-	function openNav() { $('#about-steemit-pond').addClass('sidenav-box-shadow').width(300); }
-	function closeNav() { $('#about-steemit-pond').remove('sidenav-box-shadow').width(0); }
-</script>
 
 <!-- Google Analytics -->
 <script>

@@ -15,6 +15,74 @@ var SteemitPond = (function() {
 
     // Just some useful constants
     var DOMAIN = "http://steemit.com/";
+    var SIDE_MENU_WIDTH = 350;
+    var COOKIE = "STEEMIT_POND_USER_FILTERS_COOKIE";
+
+    var init = function() {
+        init.menu();
+        pollLatestBlock();
+    };
+
+    // Menu setup ----------------------------------------------------------------------------------
+
+    init.menu = function() {
+        $('#sound').click(function() { toggleSound(); });
+        $('#user-filters').click(function() { openUserFiltersMenu(); });
+        $('#app-info').click(function() { openInfoMenu(); });
+        $('.close-menu-btn').click(function() { closeMenu(); });
+        init.userFiltersInput();
+        init.existingFilters();
+    };
+
+    init.userFiltersInput = function() {
+        $('.add-user-filter-input').keypress(function(e) {
+            if( e.which == 13) addUserFilter($('.add-user-filter-input').val());
+        });
+        $('.add-user-filter-submit').click(function() {
+            addUserFilter($('.add-user-filter-input').val());
+        });
+    };
+
+    init.existingFilters = function() {
+        // TODO Get and append to .user-filters-menu
+    };
+
+    var toggleSound = function() {
+        console.log('toggleSound() called');
+        // TODO Check sound state based on the glyph icon $(#sound)
+        // TODO Update the glyph icon
+        // TODO Update the sound state
+        // Options <span class="glyphicon glyphicon-volume-off"></span>
+        //         <span class="glyphicon glyphicon-volume-down"></span>
+    };
+
+    var openUserFiltersMenu = function() {
+        $('.info-menu').hide();
+        $('.user-filters-menu').hide();
+        $('#side-menu').addClass('sidenav-box-shadow').width(SIDE_MENU_WIDTH);
+        $('.user-filters-menu').fadeIn(500);
+    };
+
+    var openInfoMenu = function() {
+        $('.user-filters-menu').hide();
+        $('.info-menu').show();
+        $('#side-menu').addClass('sidenav-box-shadow').width(SIDE_MENU_WIDTH);
+    };
+
+    var closeMenu = function() {
+        $('#side-menu').remove('sidenav-box-shadow').width(0);
+    };
+
+    // User filters --------------------------------------------------------------------------------
+
+    var addUserFilter = function(filter) {
+        // TODO Implement
+        console.log("addUserfilter => " + filter);
+    };
+
+    /*
+     *
+     */
 
     var pollLatestBlock = function() {
         ws.connect().then(function(response) {
@@ -359,7 +427,7 @@ var SteemitPond = (function() {
      * Return SteemitPond API
      */
     return { 
-        init : pollLatestBlock // gets the ball rolling
+        init : init // gets the ball rolling
     };
 
 })(); // SteemitPond
