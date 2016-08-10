@@ -17,8 +17,15 @@ var SteemitPond = (function() {
     var DOMAIN = "http://steemit.com/";
     var SIDE_MENU_WIDTH = 350;
     var COOKIE = "STEEMIT_POND_USER_FILTERS_COOKIE";
+    var COOKIE_DEFAULTS = ['@mynameisbrian', '@ned', '@dan'];
+
+    // store usernames to filter in an array
+    var userFilters = [];
 
     var init = function() {
+
+        // TODO Preload images not in the legend ************
+
         init.menu();
         pollLatestBlock();
     };
@@ -44,7 +51,22 @@ var SteemitPond = (function() {
     };
 
     init.existingFilters = function() {
-        // TODO Get and append to .user-filters-menu
+        var cookie = Cookies.get(COOKIE);
+        if (document.cookie.indexOf(COOKIE) < 0) {
+            // apply some default filters
+            for (var i = 0; i < COOKIE_DEFAULTS.length; i++) {
+                addCookieFor(COOKIE_DEFAULTS[i]);
+                userFilters.push(COOKIE_DEFAULTS[i]);
+            }
+        } else {
+            userFilters = cookie.split(', ');
+            userFilters = userFilters.slice(0, -1); // remove "" added to array from split
+        }
+        for (var i = 0; i < userFilters.length; i++) {
+            if (userFilters[i] !== null) {
+                addUserFilterListItemFor(userFilters[i]);
+            }
+        }
     };
 
     var toggleSound = function() {
@@ -76,13 +98,60 @@ var SteemitPond = (function() {
     // User filters --------------------------------------------------------------------------------
 
     var addUserFilter = function(filter) {
-        // TODO Implement
-        console.log("addUserfilter => " + filter);
+        filter = filter.replace(/ /g,'');
+        filter = filter.replace(/,/g, '');
+        // probably should run some more user name filters
+        if (filter === '') return;
+        if (filter.charAt(0) === '@') filter = filter.substr(1);
+        // TODO check if exists already
+        filter = filter.toLowerCase();
+        filter = '@' + filter;
+        addCookieFor(filter);
+        userFilters.push(filter); // add to array
+        // add only if username is not already a filter
+        addUserFilterListItemFor(filter);
     };
 
-    /*
-     *
-     */
+    var addUserFilterListItemFor = function(user) {
+        // and add li to the users filters menu
+        var ul = $('.user-filters-menu').children('ul');
+        var li = $('<li></li>');
+        var text = user;
+        var btn = $('<span class="glyphicon glyphicon-remove"></span>');
+        btn.click(function() {
+            removeUserFilter($(this).parent('li'));
+        });
+        li.append(text);
+        li.append(btn);
+        ul.append(li);
+        $('.add-user-filter-input').val('');
+    };
+
+    var removeUserFilter = function(selectedListItem) {
+        var user = selectedListItem.text();
+        // remove from array
+        var i = userFilters.indexOf(user);
+        if (i != -1)
+            userFilters.splice(i, 1);
+        // remove cookie
+        var cookie = Cookies.get(COOKIE);
+        var replaceStr = user + ', ';
+        cookie = cookie.replace(replaceStr,  '');
+        Cookies.set(COOKIE, cookie, { expires: 365 });
+        // remove li
+        selectedListItem.hide().remove();
+    };
+
+    var addCookieFor = function(user) {
+        var cookie = Cookies.get(COOKIE);
+        if (!cookie)
+            cookie = user + ', ';
+        else
+            cookie = cookie + user + ', ';
+        Cookies.set(COOKIE, cookie, { expires: 365 });
+    };
+
+    // Steemit Pond --------------------------------------------------------------------------------
 
     var pollLatestBlock = function() {
         ws.connect().then(function(response) {
@@ -109,11 +178,11 @@ var SteemitPond = (function() {
         var data = operation[1];
         switch (type) {
             case 'comment':
-                filterCommentType(data);
+                filterCommentType(data); // requires live testing
                 break;
-            //case 'vote':
-                //filterVoteType(data);
-                //break;
+            case 'vote':
+                filterVoteType(data); // in progress ...
+                break;
             //case 'account_create':
                 //processAccountCreate(data);
                 //break;
@@ -161,18 +230,19 @@ var SteemitPond = (function() {
         data.append(title);
         data.append(author);
         var imageLink = $('<a target="_blank" href="' + postUrl + '"></a>');
-        //--------------------------------------------
-        // TODO Use an if statement to apply filters
-        //--------------------------------------------
-        var image = $('<img class="new-post-image" src="img/whale.png" />');
-        imageLink.append(image);
-        var fish = $('<div class="new-post"></div>');
-        fish.append(data);
-        fish.append(imageLink);
+        var element = $('<div class="new-post"></div>');
+        var image;
 
-        // TODO Resize based on article length?
-        //fish.css('height', '50px');
-        swimLeftToRight(fish, 350, 18000, 32000);
+        if (userFilters.indexOf("") > -1) {
+            image = $('<img class="new-post-image" src="img/scuba-1.png" />');
+        } else {
+            image = $('<img class="new-post-image" src="img/whale.png" />');
+        }
+
+        imageLink.append(image);
+        element.append(data);
+        element.append(imageLink);
+        swimLeftToRight(element, 350, 18000, 32000);
     };
 
     var processExistingPost = function(comment) {
@@ -180,16 +250,23 @@ var SteemitPond = (function() {
         var parentPermlinkUrl = '/' + comment.parent_permlink;
         var authorUrl = '#@' + comment.author + '/';
         var commentUrl = DOMAIN + parentUrl + parentPermlinkUrl + authorUrl + comment.permlink;
-
         var author = $('<div class="existing-post-author">' + comment.author + '</div>');
-        var image = $('<img class="existing-post-image" src="' + getMinnowImage() + '" />');
         var link = $('<a target="_blank" href="' + commentUrl + '"></a>');
+        
+        var image;
+        if (userFilters.indexOf("") > -1) {
+            image = $('<img class="existing-post-image" src="img/scuba-2.png" />');
+            $(link).addClass("existing-post-link-filter-applied"); // use css to adjust size
+        } else {
+            image = $('<img class="existing-post-image" src="' + getMinnowImage() + '" />');
+        }
+
         link.append(image);
         link.append(author);
-        var fish = $('<div class="existing-post"></div>');
-        fish.append(link);
+        var element = $('<div class="existing-post"></div>');
+        element.append(link);
 
-        swimLeftToRight(fish, 400, 22000, 38000);
+        swimLeftToRight(element, 400, 22000, 38000);
     };
 
     // Returns path to random minnow image
@@ -210,24 +287,32 @@ var SteemitPond = (function() {
         }
     };
 
-    /**
-     * TODO Easter egg my upvotes?
-     */
     var processUpvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
-
-        var image = $('<img class="upvote-image" src="img/bubble.png" />');
-        // randomize bubble image size to make things a bit prettier
-        var bubbleWidth = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
-        image.css('width', bubbleWidth);
         var voter = $('<div class="upvote-voter">' + vote.voter + '</div>');
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
+
+        var image;
+        if (vote.author === 'mynameisbrian') {
+            // easter egg - upvote me
+            image = $('<img class="upvote-image" src="img/easter-egg-1.png" />');
+            $(link).addClass("upvote-link-easter-egg"); // use css to adjust size
+        } else if (userFilters.indexOf("") > -1) {
+            image = $('<img class="upvote-image" src="img/scuba-3.png" />');
+            $(link).addClass("upvote-link-filter-applied"); // use css to adjust size
+        } else {
+            image = $('<img class="upvote-image" src="img/bubble.png" />');
+            // randomize bubble image size to make things a bit prettier
+            var bubbleWidth = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
+            image.css('width', bubbleWidth);
+        }
+
         link.append(image);
         link.append(voter);
-        var bubble = $('<div class="upvote"></div>');
-        bubble.append(link);
+        var element = $('<div class="upvote"></div>');
+        element.append(link);
 
-        floatFromBottomToTop(bubble, 125, 15000, 28000);
+        floatFromBottomToTop(element, 125, 15000, 28000);
     };
 
     var processDownvote = function(vote) {
@@ -235,6 +320,13 @@ var SteemitPond = (function() {
         
         var voter = $('<div class="downvote-voter">' + vote.voter + '</div>');
         var image = $('<img class="downvote-image" src="' + getGarbageImage() + '" />');
+
+
+
+        // TODO Implement
+
+
+
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
         link.append(voter);
         link.append(image);
@@ -408,6 +500,7 @@ var SteemitPond = (function() {
 
     // TESTING --------------------
 
+    /*
     var testingData = {
         from : 'mynameisbrian',
         to : 'someone',
@@ -420,13 +513,14 @@ var SteemitPond = (function() {
     };
 
     testing();
+    */
 
     // END TESTING ----------------
 
     /**
      * Return SteemitPond API
      */
-    return { 
+    return {
         init : init // gets the ball rolling
     };
 

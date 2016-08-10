@@ -333,7 +333,7 @@ THIS IS CSS FROM OLD NAV MENU
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
-    height: 7em;
+    height: 7.5em; /* Adjusts fish size - tweaked with js */
 }
 
 .new-post-data {
@@ -376,10 +376,12 @@ THIS IS CSS FROM OLD NAV MENU
 
 .existing-post a {
     height: 3em;
-    font-size: .7em;
+    font-size: .7em; /* Adjusts size */
 }
 
-.existing-post-image {}
+.existing-post a.existing-post-link-filter-applied {
+    height: 6em; /* Adjusts size */
+}
 
 /*----- New Account - Dolphin -----*/
 
@@ -388,8 +390,6 @@ THIS IS CSS FROM OLD NAV MENU
     font-size: .7em;
 }
 
-.new-account-image {}
-
 /*----- POW - Shark -----*/
 
 .pow a {
@@ -397,12 +397,18 @@ THIS IS CSS FROM OLD NAV MENU
     font-size: .7em;
 }
 
-.pow-image {}
-
 /*----- Upvotes - Bubbles -----*/
 
 .upvote a {
-	font-size: .6em;
+    font-size: .6em;
+}
+
+.upvote a.upvote-link-filter-applied {
+    height: 12em;
+}
+
+.upvote a.upvote-link-easter-egg {
+    height: 16em;
 }
 
 .upvote-image { margin-bottom: 5px; }
