@@ -178,26 +178,27 @@ var SteemitPond = (function() {
         var data = operation[1];
         switch (type) {
             case 'comment':
-                filterCommentType(data); // requires live testing
+                filterCommentType(data); // filter applied
                 break;
             case 'vote':
-                filterVoteType(data); // in progress ...
+                filterVoteType(data); // filter applied
                 break;
-            //case 'account_create':
-                //processAccountCreate(data);
-                //break;
-            //case 'account_update':
-                //break;
-            //case 'pow':
-                //processPow(data);
-                //break;
-            //case 'limit_order_create':
-                //processLimitOrderCreate(data);
-                //break;
+            case 'account_create':
+                processAccountCreate(data);
+                break;
+            case 'account_update':
+                processAccountUpdate(data); // filter applied
+                break;
+            case 'pow':
+                processPow(data);
+                break;
+            case 'transfer':
+                processTransfer(data);
+                break;
+            case 'limit_order_create':
+                processLimitOrderCreate(data);
+                break;
             //case 'limit_order_cancel':
-                //break;
-            //case 'transfer':
-                //processTransfer(data);
                 //break;
             default:
                 break;
@@ -233,7 +234,7 @@ var SteemitPond = (function() {
         var element = $('<div class="new-post"></div>');
         var image;
 
-        if (userFilters.indexOf("") > -1) {
+        if (userFilters.indexOf('@' + comment.author) > -1) {
             image = $('<img class="new-post-image" src="img/scuba-1.png" />');
         } else {
             image = $('<img class="new-post-image" src="img/whale.png" />');
@@ -254,7 +255,7 @@ var SteemitPond = (function() {
         var link = $('<a target="_blank" href="' + commentUrl + '"></a>');
         
         var image;
-        if (userFilters.indexOf("") > -1) {
+        if (userFilters.indexOf("@" + comment.author) > -1) {
             image = $('<img class="existing-post-image" src="img/scuba-2.png" />');
             $(link).addClass("existing-post-link-filter-applied"); // use css to adjust size
         } else {
@@ -297,7 +298,7 @@ var SteemitPond = (function() {
             // easter egg - upvote me
             image = $('<img class="upvote-image" src="img/easter-egg-1.png" />');
             $(link).addClass("upvote-link-easter-egg"); // use css to adjust size
-        } else if (userFilters.indexOf("") > -1) {
+        } else if (userFilters.indexOf('@' + vote.voter) > -1) {
             image = $('<img class="upvote-image" src="img/scuba-3.png" />');
             $(link).addClass("upvote-link-filter-applied"); // use css to adjust size
         } else {
@@ -317,23 +318,31 @@ var SteemitPond = (function() {
 
     var processDownvote = function(vote) {
         var postUrl = DOMAIN + 'steempond/@' + vote.author + '/' + vote.permlink;
-        
         var voter = $('<div class="downvote-voter">' + vote.voter + '</div>');
-        var image = $('<img class="downvote-image" src="' + getGarbageImage() + '" />');
-
-
-
-        // TODO Implement
-
-
-
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
+
+        var image;
+        if (userFilters.indexOf('@' + vote.voter) > -1) {
+            image = $('<img class="downvote-image" src="img/barrel.png" />');
+            $(link).addClass("downvote-link-filter-applied"); // use css to adjust size
+            $(link).css({ WebkitTransform: 'rotate(' + getGarbageRotation() + 'deg)'});
+            $(link).css({ '-moz-transform': 'rotate(' + getGarbageRotation() + 'deg)'});
+        } else {
+            image = $('<img class="downvote-image" src="' + getGarbageImage() + '" />');
+        }
+
         link.append(voter);
         link.append(image);
         var garbage = $('<div class="downvote"></div>');
         garbage.append(link);
 
         sinkToBottom(garbage, 125, 12000, 25000);
+    };
+
+    var getGarbageRotation = function() {
+        var ran = Math.floor(Math.random() * (20 - 1 + 1)) + 1;
+        var plusOrMinus = Math.random() < 0.5 ? -1 : 1;
+        return ran * plusOrMinus;
     };
 
     // Returns path to random garbage image
@@ -360,6 +369,27 @@ var SteemitPond = (function() {
         swimLeftToRight(dolphin, 400, 20000, 32000);
     };
 
+    var processAccountUpdate = function(account) {
+        var acctUrl = DOMAIN + '@' + account.account;
+        var accountName = $('<div class="update-account-name">' + account.account + '</div>');
+        var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
+
+        var image;
+        if (userFilters.indexOf('@' + account.account) > -1) {
+            image = image = $('<img class="update-account-image" src="img/scuba-4.png" />');
+            $(link).addClass("account-update-link-filter-applied"); // use css to adjust size
+        } else {
+            image = $('<img class="update-account-image" src="img/baluga.png" />');
+        }
+
+        link.append(accountName);
+        link.append(image);
+        var baluga = $('<div class="update-account"></div>');
+        baluga.append(link);
+
+        swimLeftToRight(baluga, 400, 25000, 35000);
+    };
+
     /*--------------------------------*
      *  Money related txs processing  *
      *--------------------------------*/
@@ -377,6 +407,7 @@ var SteemitPond = (function() {
         var to = $('<div class="transfer-to"></div>');
         var toText = $('<div>to <a target="_blank" href="' + toUrl + '">' + transfer.to + '</a>');
         var toImg = $('<a target="_blank" href="' + toUrl + '"><img src="img/barracuda.png" /></a>');
+        // TODO Add user filter
         to.append(toText);
         to.append(toImg);
 
@@ -388,11 +419,18 @@ var SteemitPond = (function() {
     };
 
     var processLimitOrderCreate = function(order) {
-
-        // Need ss
-
-        console.log("LIMIT ORDER CREATE");
-        console.log(order);
+        var ownerUrl = DOMAIN + '@' + order.owner;
+        var owner = $('<a class="limit-create-owner" target="_blank" href="' + ownerUrl + '">' + order.owner + '</a>');
+        var image = $('<img class="limit-create-image" src="img/turtle.png" />');
+        // TODO user filter
+        var amount = $('<div>' + order.amount_to_sell + '</div>');
+        var link = $('<a target="_blank" href="' + ownerUrl + '"></a>');
+        var element = $('<div class="limit-create"></div>');
+        link.append(amount);
+        link.append(image);
+        link.append(owner);
+        element.append(link);
+        swimLeftToRight(element, 400, 35000, 45000);
     };
 
     /*---------------------*
@@ -403,8 +441,9 @@ var SteemitPond = (function() {
         var acctUrl = DOMAIN + '@' + pow.worker_account;
 
         var accountName = $('<div class="pow-account-name">' + pow.worker_account + '</div>');
-        var image = $('<img class="pow-image" src="img/shark-1.png" />');
         var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
+        var image = $('<img class="pow-image" src="img/shark-1.png" />');
+        // TODO Add user filter
         link.append(image);
         link.append(accountName);
         var shark = $('<div class="pow"></div>');
@@ -481,7 +520,7 @@ var SteemitPond = (function() {
         pond.append(element);
         element.css({
             position : 'absolute',
-            top : 0 - element.height(),
+            top : 0 - element.height() - 50,
             left : randomStartPos
         });
 
@@ -498,24 +537,20 @@ var SteemitPond = (function() {
         });
     };
 
-    // TESTING --------------------
-
     /*
+    // TESTING
     var testingData = {
-        from : 'mynameisbrian',
-        to : 'someone',
-        amount : '0.404 STEEM'
+        // add testing data here
     };
 
     var testing = function() {
-        processTransfer(testingData);
+        processLimitOrderCreate(testingData); // update to test
         setTimeout(testing, 5000);
     };
 
     testing();
+    // END TESTING
     */
-
-    // END TESTING ----------------
 
     /**
      * Return SteemitPond API
