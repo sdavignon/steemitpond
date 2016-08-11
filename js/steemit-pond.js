@@ -19,6 +19,10 @@ var SteemitPond = (function() {
     var COOKIE = "STEEMIT_POND_USER_FILTERS_COOKIE";
     var COOKIE_DEFAULTS = ['@mynameisbrian', '@ned', '@dan'];
 
+    // Sounds
+    var soundsOn = false;
+    var ambientSound;
+
     // store usernames to filter in an array
     var userFilters = [];
 
@@ -27,6 +31,7 @@ var SteemitPond = (function() {
         // TODO Preload images not in the legend ************
 
         init.menu();
+        init.sound();
         pollLatestBlock();
     };
 
@@ -39,6 +44,12 @@ var SteemitPond = (function() {
         $('.close-menu-btn').click(function() { closeMenu(); });
         init.userFiltersInput();
         init.existingFilters();
+    };
+
+    init.sound = function() {
+        ambientSound = document.createElement('audio');
+        ambientSound.setAttribute('src', 'sound/bubbles-underwater.mp3');
+        ambientSound.loop = true;
     };
 
     init.userFiltersInput = function() {
@@ -70,12 +81,15 @@ var SteemitPond = (function() {
     };
 
     var toggleSound = function() {
-        console.log('toggleSound() called');
-        // TODO Check sound state based on the glyph icon $(#sound)
-        // TODO Update the glyph icon
-        // TODO Update the sound state
-        // Options <span class="glyphicon glyphicon-volume-off"></span>
-        //         <span class="glyphicon glyphicon-volume-down"></span>
+        if (soundsOn) {
+            soundsOn = false;
+            ambientSound.pause();
+            $('#sound').html('<span class="glyphicon glyphicon-volume-off"></span>');
+        } else {
+            soundsOn = true;
+            ambientSound.play();
+            $('#sound').html('<span class="glyphicon glyphicon-volume-up"></span>');
+        }
     };
 
     var openUserFiltersMenu = function() {

@@ -11,6 +11,19 @@ html {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#008fe8', endColorstr='#005ebc',GradientType=0 );
 }
 
+#steemit-pond-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#steemit-pond {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
 a { text-decoration: none; }
 a:focus { outline: 0; }
 a:hover { text-decoration: underline; }
@@ -188,6 +201,7 @@ header ul li:hover {
     font-size: 36px;
     margin-top: .1em;
     margin-left: 50px;
+    color: #0171b7;
 }
 
 .sidenav .menus-container {  margin: 3em 1em; }
@@ -245,22 +259,17 @@ header ul li:hover {
     cursor: pointer;
 }
 
+/* Legend */
 
-/*
- 
-THIS IS CSS FROM OLD NAV MENU
-
-.sidenav h2 {
+.info-menu h2 {
     font-size: 1.8em;
     font-weight: 700;
     margin-left: 15px;
 }
 
-.sidenav #legend-title {
-    margin-top: 60px;
-}
+.info-menu #legend-title { margin-top: 60px; }
 
-.sidenav h3 {
+.info-menu h3 {
     font-size: 1em;
     font-weight: 700;
     margin-left: 15px;
@@ -268,21 +277,22 @@ THIS IS CSS FROM OLD NAV MENU
     margin-bottom: .5em;
 }
 
-.sidenav .legend-image-container {
+.info-menu .legend-image-container {
     margin-left: 15px;
     margin-bottom: 20px;
 }
 
-.sidenav .legend-image-full {
-    width: 70%;
+.info-menu .legend-image-container div {
+    display: table-cell;
+    vertical-align: middle;
 }
 
-.sidenav .legend-image-third {
-    width: 25%;
-}
+.info-menu .legend-image-full { width: 80%; }
+.info-menu .legend-image-two-third { width: 58%; }
+.info-menu .legend-image-half { width: 45%; }
+.info-menu .legend-image-third { width: 22%; }
 
-.sidenav a {
-    margin-left: 15px;
+.info-link {
     margin-top: 1em;
     margin-bottom: .5em;
     font-size: 1em;
@@ -290,7 +300,6 @@ THIS IS CSS FROM OLD NAV MENU
     display: block;
     transition: 0.3s
 }
-*/
 
 /* Pond Element Styles -------------------------------------------------------*/
 
@@ -417,6 +426,8 @@ THIS IS CSS FROM OLD NAV MENU
     font-size: .7em;
 }
 
+.limit-create { font-size: .8em; }
+
 .limit-create-image {
     margin-top: 3px;
     margin-bottom: 2px;
@@ -457,4 +468,20 @@ THIS IS CSS FROM OLD NAV MENU
 }
 
 .downvote-image { margin-top:2px; }
+
+/*----- Footer -----*/
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1em;
+    color: white;
+    font-size: 1.1em;
+}
+
+footer a {
+    color: #88cffc;
+}
 
