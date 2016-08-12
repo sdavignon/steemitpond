@@ -27,9 +27,6 @@ var SteemitPond = (function() {
     var userFilters = [];
 
     var init = function() {
-
-        // TODO Preload images not in the legend ************
-
         init.menu();
         init.sound();
         pollLatestBlock();
@@ -192,16 +189,16 @@ var SteemitPond = (function() {
         var data = operation[1];
         switch (type) {
             case 'comment':
-                filterCommentType(data); // filter applied
+                filterCommentType(data);
                 break;
             case 'vote':
-                filterVoteType(data); // filter applied
+                filterVoteType(data);
                 break;
             case 'account_create':
                 processAccountCreate(data);
                 break;
             case 'account_update':
-                processAccountUpdate(data); // filter applied
+                processAccountUpdate(data);
                 break;
             case 'pow':
                 processPow(data);
@@ -550,21 +547,6 @@ var SteemitPond = (function() {
             element.remove();
         });
     };
-
-    /*
-    // TESTING
-    var testingData = {
-        // add testing data here
-    };
-
-    var testing = function() {
-        processLimitOrderCreate(testingData); // update to test
-        setTimeout(testing, 5000);
-    };
-
-    testing();
-    // END TESTING
-    */
 
     /**
      * Return SteemitPond API
