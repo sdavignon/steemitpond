@@ -248,7 +248,7 @@ var SteemitPond = (function() {
         if (userFilters.indexOf('@' + comment.author) > -1) {
             image = $('<img class="new-post-image" src="img/scuba-1.png" />');
         } else {
-            image = $('<img class="new-post-image" src="img/whale.png" />');
+            image = $('<img class="new-post-image" src="img-xmas/whale.png" />');
         }
 
         imageLink.append(image);
