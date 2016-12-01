@@ -1218,11 +1218,7 @@ html {
     position: fixed;
     width: 100%;
     height: 100%;
-
-
     background:url("../img/stars.png");
-
-
     overflow: hidden
 }
 
@@ -1400,10 +1396,10 @@ header ul li:hover {
     z-index: 100;
     top: 0;
     right: 0;
-    background-color: #fff;
+    background-color: #032035;
     overflow-x: hidden;
     overflow-y: scroll;
-    color: #014875;
+    color: white;
     white-space: nowrap;
     transition: .2s
 }
@@ -1415,7 +1411,7 @@ header ul li:hover {
     font-size: 36px;
     margin-top: .1em;
     margin-left: 50px;
-    color: #0171b7
+    color: white;
 }
 
 .sidenav .menus-container {
@@ -1570,13 +1566,14 @@ header ul li:hover {
     vertical-align: middle;
     text-align: center;
     white-space: nowrap;
-    height: 7.5em
+    height: 8.5em /* SANTA CLAUS */
 }
 
 .new-post-data {
     display: inline-block;
-    vertical-align: middle;
-    text-align: right
+    vertical-align: bottom;
+    text-align: right;
+    padding-right: .5em;
 }
 
 .new-post a {
@@ -1639,25 +1636,25 @@ header ul li:hover {
 }
 
 .existing-post a {
-    height: 3em;
+    height: 7.5em; /* COMMENT REINDEER */
     font-size: .7em
 }
 
 .existing-post a.existing-post-link-filter-applied {
-    height: 6em
+    height: 9.5em
 }
 
 .new-account a {
-    height: 3.8em;
+    height: 4.8em;
     font-size: .7em
 }
 
 .new-account-image {
-    margin-top: 2px
+    margin-top: 4px
 }
 
 .update-account a {
-    height: 3.8em;
+    height: 4.8em;
     font-size: .7em
 }
 
@@ -1665,8 +1662,12 @@ header ul li:hover {
     height: 4em
 }
 
+.update-account .update-account-name {
+    margin-bottom: 4px;
+}
+
 .limit-create a {
-    height: 3.8em;
+    height: 7em;
     font-size: .7em
 }
 
@@ -1681,8 +1682,14 @@ header ul li:hover {
 
 .pow a {
     height: 6.2em;
-    font-size: .7em
+    font-size: .7em;
 }
+
+.pow .pow-account-name {
+    margin-top: 4px;
+}
+
+/* SNOW FLAKE */
 
 .upvote a {
     font-size: .6em
@@ -1706,7 +1713,7 @@ header ul li:hover {
 }
 
 .downvote a.downvote-link-filter-applied {
-    height: 7em
+    height: 9em
 }
 
 .downvote-image {

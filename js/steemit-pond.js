@@ -45,7 +45,7 @@ var SteemitPond = (function() {
 
     init.sound = function() {
         ambientSound = document.createElement('audio');
-        ambientSound.setAttribute('src', 'sound/bubbles-underwater.mp3');
+        ambientSound.setAttribute('src', 'sound-xmas/jingle-bells.mp3');
         ambientSound.loop = true;
     };
 
@@ -246,9 +246,9 @@ var SteemitPond = (function() {
         var image;
 
         if (userFilters.indexOf('@' + comment.author) > -1) {
-            image = $('<img class="new-post-image" src="img/scuba-1.png" />');
+            image = $('<img class="new-post-image" src="img-xmas/post-santa-sleigh-filter.png" />');
         } else {
-            image = $('<img class="new-post-image" src="img-xmas/whale.png" />');
+            image = $('<img class="new-post-image" src="img-xmas/post-santa-sleigh.png" />');
         }
 
         imageLink.append(image);
@@ -267,10 +267,10 @@ var SteemitPond = (function() {
         
         var image;
         if (userFilters.indexOf("@" + comment.author) > -1) {
-            image = $('<img class="existing-post-image" src="img/scuba-2.png" />');
+            image = $('<img class="existing-post-image" src="img-xmas/comment-reindeer-filter.png" />');
             $(link).addClass("existing-post-link-filter-applied"); // use css to adjust size
         } else {
-            image = $('<img class="existing-post-image" src="' + getMinnowImage() + '" />');
+            image = $('<img class="existing-post-image" src="img-xmas/comment-reindeer.png" />');
         }
 
         link.append(image);
@@ -305,15 +305,11 @@ var SteemitPond = (function() {
         var link = $('<a target="_blank" href="' + postUrl + '"></a>');
 
         var image;
-        if (vote.author === 'mynameisbrian') {
-            // easter egg - upvote me
-            image = $('<img class="upvote-image" src="img/easter-egg-1.png" />');
-            $(link).addClass("upvote-link-easter-egg"); // use css to adjust size
-        } else if (userFilters.indexOf('@' + vote.voter) > -1) {
-            image = $('<img class="upvote-image" src="img/scuba-3.png" />');
+        if (userFilters.indexOf('@' + vote.voter) > -1) {
+            image = $('<img class="upvote-image" src="img-xmas/upvote-snowflake-filter.png" />');
             $(link).addClass("upvote-link-filter-applied"); // use css to adjust size
         } else {
-            image = $('<img class="upvote-image" src="img/bubble.png" />');
+            image = $('<img class="upvote-image" src="img-xmas/upvote-snowflake.png" />');
             // randomize bubble image size to make things a bit prettier
             var bubbleWidth = Math.floor(Math.random() * (30 - 20 + 1)) + 20;
             image.css('width', bubbleWidth);
@@ -324,7 +320,7 @@ var SteemitPond = (function() {
         var element = $('<div class="upvote"></div>');
         element.append(link);
 
-        floatFromBottomToTop(element, 125, 15000, 28000);
+        sinkToBottom(element, 125, 15000, 28000);
     };
 
     var processDownvote = function(vote) {
@@ -334,12 +330,10 @@ var SteemitPond = (function() {
 
         var image;
         if (userFilters.indexOf('@' + vote.voter) > -1) {
-            image = $('<img class="downvote-image" src="img/barrel.png" />');
+            image = $('<img class="downvote-image" src="img-xmas/downvote-coal-filter.png" />');
             $(link).addClass("downvote-link-filter-applied"); // use css to adjust size
-            $(link).css({ WebkitTransform: 'rotate(' + getGarbageRotation() + 'deg)'});
-            $(link).css({ '-moz-transform': 'rotate(' + getGarbageRotation() + 'deg)'});
         } else {
-            image = $('<img class="downvote-image" src="' + getGarbageImage() + '" />');
+            image = $('<img class="downvote-image" src="img-xmas/downvote-coal.png" />');
         }
 
         link.append(voter);
@@ -370,7 +364,7 @@ var SteemitPond = (function() {
         var newAcctUrl = DOMAIN + '@' + account.new_account_name;
 
         var accountName = $('<div class="new-account-name">' + account.new_account_name + '</div>');
-        var image = $('<img class="new-account-image" src="img/dolphin-1.png" />');
+        var image = $('<img class="new-account-image" src="img-xmas/account-new-gbm.png" />');
         var link = $('<a target="_blank" href="' + newAcctUrl + '"></a>');
         link.append(accountName);
         link.append(image);
@@ -386,12 +380,7 @@ var SteemitPond = (function() {
         var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
 
         var image;
-        if (userFilters.indexOf('@' + account.account) > -1) {
-            image = image = $('<img class="update-account-image" src="img/scuba-4.png" />');
-            $(link).addClass("account-update-link-filter-applied"); // use css to adjust size
-        } else {
-            image = $('<img class="update-account-image" src="img/baluga.png" />');
-        }
+        image = $('<img class="update-account-image" src="img-xmas/account-edit-gbm.png" />');
 
         link.append(accountName);
         link.append(image);
@@ -411,13 +400,13 @@ var SteemitPond = (function() {
 
         var from = $('<div class="transfer-from"></div>');
         var fromText = $('<div>' + transfer.amount + ' from <a target="_blank" href="' + fromUrl + '">' + transfer.from + '</a>');
-        var fromImg = $('<a target="_blank" href="' + fromUrl + '"><img src="img/barracuda.png" /></a>');
+        var fromImg = $('<a target="_blank" href="' + fromUrl + '"><img src="img-xmas/transfer-stocking-empty.png" /></a>');
         from.append(fromText);
         from.append(fromImg);
 
         var to = $('<div class="transfer-to"></div>');
         var toText = $('<div>to <a target="_blank" href="' + toUrl + '">' + transfer.to + '</a>');
-        var toImg = $('<a target="_blank" href="' + toUrl + '"><img src="img/barracuda.png" /></a>');
+        var toImg = $('<a target="_blank" href="' + toUrl + '"><img src="img-xmas/transfer-stocking-full.png" /></a>');
         // TODO Add user filter
         to.append(toText);
         to.append(toImg);
@@ -432,7 +421,7 @@ var SteemitPond = (function() {
     var processLimitOrderCreate = function(order) {
         var ownerUrl = DOMAIN + '@' + order.owner;
         var owner = $('<a class="limit-create-owner" target="_blank" href="' + ownerUrl + '">' + order.owner + '</a>');
-        var image = $('<img class="limit-create-image" src="img/turtle.png" />');
+        var image = $('<img class="limit-create-image" src="img-xmas/limit-stocking.png" />');
         // TODO user filter
         var amount = $('<div>' + order.amount_to_sell + '</div>');
         var link = $('<a target="_blank" href="' + ownerUrl + '"></a>');
@@ -441,7 +430,7 @@ var SteemitPond = (function() {
         link.append(image);
         link.append(owner);
         element.append(link);
-        swimLeftToRight(element, 400, 35000, 45000);
+        sinkToBottom(element, 400, 15000, 20000);
     };
 
     /*---------------------*
@@ -453,14 +442,14 @@ var SteemitPond = (function() {
 
         var accountName = $('<div class="pow-account-name">' + pow.worker_account + '</div>');
         var link = $('<a target="_blank" href="' + acctUrl + '"></a>');
-        var image = $('<img class="pow-image" src="img/shark-1.png" />');
+        var image = $('<img class="pow-image" src="img-xmas/miner-present.png" />');
         // TODO Add user filter
         link.append(image);
         link.append(accountName);
         var shark = $('<div class="pow"></div>');
         shark.append(link);
 
-        swimLeftToRight(shark, 400, 28000, 40000);
+        sinkToBottom(shark, 400, 28000, 40000);
     };
 
     /*--------------*
@@ -548,11 +537,19 @@ var SteemitPond = (function() {
         });
     };
 
+    var test = function() {
+        console.log("TESTING");
+        setInterval(function() {
+
+        }, 5000);
+    };
+
     /**
      * Return SteemitPond API
      */
     return {
-        init : init // gets the ball rolling
+        init : init, // gets the ball rolling
+        test : test
     };
 
 })(); // SteemitPond
