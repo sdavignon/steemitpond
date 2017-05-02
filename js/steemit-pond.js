@@ -548,30 +548,11 @@ var SteemitPond = (function() {
         });
     };
 
-    var runTest = function() {
-
-        console.log("1");
-
-        setInterval(function(){ 
-
-            console.log("2");
-            
-            var vote = {
-                voter : 'XXXXXX'
-            }
-
-            processUpvote(vote);
-
-        }, 1000);
-
-    };
-
     /**
      * Return SteemitPond API
      */
     return {
-        init : init, // gets the ball rolling
-        runTest : runTest
+        init : init // gets the ball rolling
     };
 
 })(); // SteemitPond
@@ -582,8 +563,4 @@ $( document ).ready(function() {
     } else {
         alert('Websocket is not supported by your browser.');
     }
-
-    console.log("A");
-
-    SteemitPond.runTest();
 });
