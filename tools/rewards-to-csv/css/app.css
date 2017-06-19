@@ -1,0 +1,61 @@
+
+/*-- navigation bar --*/
+.navbar {
+  border-radius: 0px;
+  margin-bottom: 0;
+}
+.active-link {
+    font-weight: bold;
+    color: #1A5099 !important;
+}
+
+.content-input {
+  background: white;
+  padding-top: 3em;
+  padding-bottom: 3em;
+}
+
+.landing {
+  text-align: center;
+  padding-top: 1em;
+}
+.landing h1 {
+    color: #1A509A;
+    font-weight: bold;
+}
+.landing p {
+    padding-top: 3em;
+    margin-top: 2em;
+}
+.landing .input-group {
+    padding-bottom: 1em;
+}
+.landing .input-group #main-username-submit {
+      min-width: 4em;
+}
+
+.results {
+  display: none;
+}
+.results-username {
+  font-size: 2.5em;
+}
+.results-close {
+  text-align: right;
+  float: right;
+}
+.results-filters {
+  margin-top: 1em;
+}
+.results-stats {
+  text-align: center;
+  font-size: 1.7em;
+  color: #1A5099 !important;
+}
+.results-number {
+  font-size: 3em;
+  line-height: 1em;
+}
+.results-number-desc {
+  margin-bottom: 1.2em;
+}
