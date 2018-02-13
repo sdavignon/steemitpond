@@ -14,7 +14,7 @@
 
 <header>
     <img class="logo" src="img/logo.png" alt="White Steemit Logo" />
-    <h1>Steemit Pond</h1>
+    <h1>SteemSea</h1>
     <ul>
         <li id="sound"><span class="glyphicon glyphicon-volume-off" aria-hidden="true"></span></li>
         <li id="user-filters"><span class="glyphicon glyphicon-eye-close"></span></li>
@@ -30,7 +30,7 @@
         <div class="user-filters-menu">
             <div class="add-user">
                 <h2>Filter Users</h2>
-                <p>Enter a username and user transactions<br /> will appear as scuba divers in the pond</p>
+                <p>Entering a username and user transactions<br /> will appear as scuba divers in the sea</p>
                 <div class="add-user-filter-input-container">
                     <input class="add-user-filter-input" type="text" />
                     <div class="add-user-filter-submit">
@@ -113,7 +113,7 @@
 </div>
 
 <footer>
-    <p>Created by <a href="http://steemit.com/@mynameisbrian">@mynameisbrian</a></p>
+    
 </footer>
 
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s=" crossorigin="anonymous"></script>
