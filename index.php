@@ -109,7 +109,7 @@
 
 <!-- Steemit Pond container -->
 <div id="steemit-pond-container">
-    <div id="steemit-pond"></div>
+    <div id="steemit-pond" class="bg-image"></div>
 </div>
 
 <footer>
