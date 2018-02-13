@@ -8,7 +8,7 @@
     <meta name="author" content="Brian W. Howell">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" type="text/css" href="css/steemitpond.min.css">
+    <link rel="stylesheet" type="text/css" href="css/steemitpond.min.css?v=1">
 </head>
 <body>
 
