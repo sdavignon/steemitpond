@@ -6,7 +6,7 @@
 var SteemitPond = (function() {
 
     // Websocket
-    var server = 'wss://node.steem.ws';
+    var server = 'wss://steemd.steemit.com';
     var ws = new WebSocketWrapper(server);
     var steem = new SteemWrapper(ws);
 
